@@ -147,6 +147,7 @@ def hard_click(x, y, clicks=1, interval=0.0, button=pg.LEFT, duration=0.0):
     return True
 
 
+# Automatically obtain the port number inserted into the serial port
 def get_available_serial():
     l = list(serial.tools.list_ports.comports())
     if len(l) < 1:
@@ -156,21 +157,22 @@ def get_available_serial():
     return port
 
 
+# Open the serial port and set the baud rate to 9600
 def open_serial():
     global mserial
     port = get_available_serial()
     if not port:
         return False
-    # mserial = serial.Serial("COM3", 115200, timeout=1)
     mserial = serial.Serial(port, 9600, timeout=1)
 
     return True
 
 
+# Handling keyboard input
+# When using the data in control_key_map, pass in command+control_key
 def hard_key_write(keys):
     global key_map, control_key_map
     l_keys = keys.split('+')
-    # print(l_keys[0], l_keys[1])
     v = []
     c = []
     for k in l_keys:
@@ -198,14 +200,29 @@ def hard_key_write(keys):
 
     mserial.write(bytes(press))
     # 延时50ms
-    time.sleep(50 / 1000)
+    keyboard_shaking()
     # 释放键
     mserial.write(bytes(release))
-    time.sleep(50 / 1000)
+    keyboard_shaking()
 
     mserial.flushInput()
 
     return True
+
+
+# returns a random number to handle keyboard shake
+def keyboard_shaking():
+    time.sleep(random.uniform(0.05, 0.3))
+
+
+# input delay function
+def delay_input(ms):
+    time.sleep(ms)
+
+
+# sleep 0~1s
+def delay_random():
+    time.sleep(random.random())
 
 
 def check_input(input):
