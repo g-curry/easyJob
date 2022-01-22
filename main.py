@@ -59,8 +59,8 @@ key_map = {
     ' ': 0x2C,
     '-': 0x2D,
     '+': 0x2E,
-    '{': 0x2F,
-    '}': 0x30,
+    '[': 0x2F,
+    ']': 0x30,
     '\\': 0x31,
 
     'ESC': 0x29,
@@ -217,6 +217,7 @@ def check_input(input):
                 hard_key_write(k + '+shift')
                 time.sleep(random.random())
                 continue
+
             if k == '{':
                 hard_key_write('[+shift')
                 time.sleep(random.random())
@@ -226,6 +227,7 @@ def check_input(input):
                 hard_key_write(']+shift')
                 time.sleep(random.random())
                 continue
+
             if k == '(':
                 hard_key_write('9+shift')
                 time.sleep(random.random())
